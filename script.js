@@ -1,10 +1,8 @@
-// Ambil elemen yang diperlukan
 const guestNameInput = document.getElementById('guest-name');
 const guestSubmitButton = document.getElementById('guest-submit');
 const guestList = document.getElementById('guest-list');
 const guests = JSON.parse(localStorage.getItem('guestbook')) || [];
 
-// Fungsi untuk menyimpan daftar ke local storage
 function saveToLocalStorage() {
     const guests = [];
     guestList.querySelectorAll('li').forEach(item => {
@@ -17,7 +15,6 @@ function saveToLocalStorage() {
     localStorage.setItem('guestbook', JSON.stringify(guests));
 }
 
-// Fungsi untuk menampilkan pesan jika daftar tamu kosong
 function checkGuestListEmpty() {
     const emptyMessage = document.getElementById('empty-message');
     if (guestList.children.length === 0) {
@@ -34,18 +31,15 @@ function checkGuestListEmpty() {
     }
 }
 
-// Fungsi untuk memuat daftar dari local storage
 function loadFromLocalStorage() {
     guests.forEach(guest => {
         const li = document.createElement('li');
 
-        // Tambahkan elemen span untuk nama tamu
         const nameSpan = document.createElement('span');
         nameSpan.textContent = guest.name;
         nameSpan.classList.add('guest-name');
         li.appendChild(nameSpan);
 
-        // Tambahkan tombol selesai
         const completeButton = document.createElement('button');
         completeButton.textContent = '✔';
         completeButton.addEventListener('click', () => {
@@ -54,7 +48,6 @@ function loadFromLocalStorage() {
             checkGuestListEmpty();
         });
 
-        // Tambahkan tombol hapus
         const deleteButton = document.createElement('button');
         deleteButton.textContent = 'Delete';
         deleteButton.addEventListener('click', () => {
@@ -73,23 +66,20 @@ function loadFromLocalStorage() {
         guestList.appendChild(li);
     });
 
-    checkGuestListEmpty(); // Periksa apakah daftar kosong setelah memuat
+    checkGuestListEmpty();
 }
 
-// Fungsi untuk menambah item baru
 function addGuest() {
     const guestName = guestNameInput.value.trim();
     if (guestName === '') return;
 
     const li = document.createElement('li');
 
-    // Tambahkan elemen span untuk nama tamu
     const nameSpan = document.createElement('span');
     nameSpan.textContent = guestName;
     nameSpan.classList.add('guest-name');
     li.appendChild(nameSpan);
 
-    // Tambahkan tombol selesai
     const completeButton = document.createElement('button');
     completeButton.textContent = '✔';
     completeButton.addEventListener('click', () => {
@@ -98,7 +88,6 @@ function addGuest() {
         checkGuestListEmpty();
     });
 
-    // Tambahkan tombol hapus
     const deleteButton = document.createElement('button');
     deleteButton.textContent = 'Delete';
     deleteButton.addEventListener('click', () => {
@@ -113,7 +102,7 @@ function addGuest() {
     guestList.appendChild(li);
     guestNameInput.value = '';
     saveToLocalStorage();
-    checkGuestListEmpty(); // Periksa apakah daftar kosong setelah menambah
+    checkGuestListEmpty(); 
 }
 
 function initializeGuestbook() {
@@ -122,11 +111,9 @@ function initializeGuestbook() {
     }
 }
 
-// Panggil fungsi ini saat halaman dimuat
 document.addEventListener('DOMContentLoaded', () => {
     initializeGuestbook();
     loadFromLocalStorage();
 });
 
-// Event listener untuk tombol submit
 guestSubmitButton.addEventListener('click', addGuest);
